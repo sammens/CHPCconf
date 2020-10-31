@@ -1,1 +1,1 @@
-# CHPC conference cod
+# CHPC conference code
