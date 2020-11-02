@@ -6,7 +6,7 @@ from utils import preprocess_image
 from sklearn.utils import resample
 from keras.preprocessing.image import ImageDataGenerator
 
-def load_data(labels, data=None, oversample=True, multi_label=True):
+def load_data(labels, size=229, data=None, oversample=True, multi_label=True):
         
     if oversample:
         new_df = pd.DataFrame()
@@ -25,7 +25,7 @@ def load_data(labels, data=None, oversample=True, multi_label=True):
     labels = labels.reset_index(drop=True)
     N = labels.shape[0]
     # add a size to argument
-    x_train = np.empty((N, 299, 299, 3), dtype=np.uint8)
+    x_train = np.empty((N, size, size, 3), dtype=np.uint8)
     y_train = pd.get_dummies(labels.iloc[:,1]).values
     
     if multi_label:
@@ -39,10 +39,10 @@ def load_data(labels, data=None, oversample=True, multi_label=True):
     
     for i, image_id in enumerate(tqdm(labels.iloc[:,0])):
         if data == 'aptos':
-            x_train[i, :, :, :] = preprocess_image(f'/home/sofosumensah/lustre/PhD/data/Aptos/train_images/{image_id}.png')
+            x_train[i, :, :, :] = preprocess_image(args.img_path+'Aptos/train_images/{}.png'.format(image_id), size) 
         else:
             try:
-                x_train[i, :, :, :] = preprocess_image(f'/home/sofosumensah/lustre/PhD/data/train_resized/{image_id}.jpeg')
+                x_train[i, :, :, :] = preprocess_image(args.img_path+'train_resized/{}.jpeg'.format(image_id), size)
             except FileNotFoundError:
                 continue
                 

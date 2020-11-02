@@ -8,23 +8,23 @@ from PIL import Image
 from keras.callbacks import Callback
 from sklearn.metrics import cohen_kappa_score
  
-def preprocess_image(image_path, desired_size=299):
+def preprocess_image(image_path, size=299):
     im = Image.open(image_path)
-    im = im.resize((desired_size, )*2, resample=Image.LANCZOS)
+    im = im.resize((size, )*2, resample=Image.LANCZOS)
     return im
 
-def path(_dir, data=None):
+def path(_dir, formats, data=None):
     
     base_dir = _dir
     if data == "aptos":
         df = pd.read_csv(base_dir+"train.csv", sep=',')
     else:
         all_files = glob.glob(os.path.join(base_dir, 'train_resized', '*.jpeg'))
-        df = pd.read_csv(base_dir+"trainLabels.csv", sep=',')
-        all_files_name = [re.sub(r'.*/home/sofosumensah/lustre/PhD/data/train_resized/', '', i) for i in all_files]
+        df = pd.read_csv(base_dir+"trainLabels.csv", sep=',') # replace trainLabels.csv with argparse saved csv file
+        all_files_name = [re.split(r'\/', all_files[i])[-1] for i, file in enumerate(all_files)]
         all_files_dict = {"image": all_files_name}
         pd_files = pd.DataFrame.from_dict(all_files_dict)
-        pd_files['image'] = pd_files['image'].str.replace(r'.jpeg', '')
+        pd_files['image'] = pd_files['image'].str.replace(formats, '') # replace with jpeg format argparse
         keepImages = list(pd_files['image'])
         df = df[df['image'].isin(keepImages)]
     
@@ -53,6 +53,6 @@ class Metrics(Callback):
         
         if _val_kappa == max(self.val_kappas):
             print("Validation Kappa has improved. Saving model.")
-            self.model.save('model_inceptionv3_odata.h5')
+            self.model.save('model.h5') # argparse model save name
 
         return
