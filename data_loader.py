@@ -4,8 +4,8 @@ import pandas as pd
 from tqdm import tqdm
 from utils import preprocess_image
 from sklearn.utils import resample
+from keras.preprocessing.image import ImageDataGenerator
 
-# cell 9
 def load_data(labels, data=None, oversample=True, multi_label=True):
         
     if oversample:
@@ -24,6 +24,7 @@ def load_data(labels, data=None, oversample=True, multi_label=True):
         pass
     labels = labels.reset_index(drop=True)
     N = labels.shape[0]
+    # add a size to argument
     x_train = np.empty((N, 299, 299, 3), dtype=np.uint8)
     y_train = pd.get_dummies(labels.iloc[:,1]).values
     
@@ -46,3 +47,13 @@ def load_data(labels, data=None, oversample=True, multi_label=True):
                 continue
                 
     return x_train, y_train
+
+def create_datagen():
+    return ImageDataGenerator(
+        zoom_range=0.15,  # set range for random zoom
+        # set mode for filling points outside the input boundaries
+        fill_mode='constant',
+        cval=0.,  # value used for fill_mode = "constant"
+        horizontal_flip=True,  # randomly flip images
+        vertical_flip=True,  # randomly flip images
+    )
