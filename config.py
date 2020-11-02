@@ -7,7 +7,7 @@ def get_args():
                         help='The size of the image')
     parser.add_argument('--path', '-p', type=str,
                         help='The path to the data')
-    parser.add_argument('--m_label', type=bool, default=True,
+    parser.add_argument('--multi_label', type=bool, default=True,
                         help='Multi-labelling classification')
     parser.add_argument('--format', '-f', type=str, default='.jpeg',
                         help='The type of format for the data')
