@@ -6,7 +6,7 @@ from utils import preprocess_image
 from sklearn.utils import resample
 from keras.preprocessing.image import ImageDataGenerator
 
-def load_data(labels, size=229, data=None, oversample=True, multi_label=True):
+def load_data(labels, img_path, size=229, data=None, oversample=True, multi_label=True):
         
     if oversample:
         new_df = pd.DataFrame()
@@ -39,10 +39,10 @@ def load_data(labels, size=229, data=None, oversample=True, multi_label=True):
     
     for i, image_id in enumerate(tqdm(labels.iloc[:,0])):
         if data == 'aptos':
-            x_train[i, :, :, :] = preprocess_image(args.img_path+'Aptos/train_images/{}.png'.format(image_id), size) 
+            x_train[i, :, :, :] = preprocess_image(img_path+'Aptos/train_images/{}.png'.format(image_id), size) 
         else:
             try:
-                x_train[i, :, :, :] = preprocess_image(args.img_path+'train_resized/{}.jpeg'.format(image_id), size)
+                x_train[i, :, :, :] = preprocess_image(img_path+'train_resized/{}.jpeg'.format(image_id), size)
             except FileNotFoundError:
                 continue
                 
