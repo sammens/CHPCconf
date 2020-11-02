@@ -19,6 +19,8 @@ def get_args():
                         help='The activation function for training')
     parser.add_argument('--weight', '-w', type=str,
                         help='Pretrained weights for training')
+    parser.add_argument('--data', type=str,
+                        help='Which data to use')
     
     args = parser.parse_args()
     

@@ -25,7 +25,7 @@ if __name__ == '__main__':
     train_df = path(args.path, formats=args.format)
     count_levels = np.bincount(train_df.iloc[:,1].values)
     class_weights = dict(enumerate(np.sum(count_levels)/(count_levels * count_levels.size)))
-    x_train, y_train = load_data(train_df, multi_label=args.multi_label)
+    x_train, y_train = load_data(train_df, args.path, data=args.data, multi_label=args.multi_label)
     
     x_train, x_val, y_train, y_val = train_test_split(
         x_train, y_train, 
