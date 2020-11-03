@@ -23,6 +23,7 @@ tf.set_random_seed(2019)
 if __name__ == '__main__':
     args = get_args()
     train_df = path(args.path, formats=args.format)
+    print(train_df)
     count_levels = np.bincount(train_df.iloc[:,1].values)
     class_weights = dict(enumerate(np.sum(count_levels)/(count_levels * count_levels.size)))
     x_train, y_train = load_data(train_df, args.path, data=args.data, multi_label=args.multi_label)
