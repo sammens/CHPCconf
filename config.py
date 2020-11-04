@@ -23,7 +23,7 @@ def get_args():
                         help='Which data to use')
     parser.add_argument('--model', type=str,
                         help='which model to use')
-    parser.add_argument('--oversample', type=bool, default=False
+    parser.add_argument('--oversample', type=bool, default=False,
                         help='oversampling')
     
     args = parser.parse_args()
