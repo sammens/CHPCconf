@@ -17,7 +17,7 @@ def path(_dir, formats, data=None):
     
     base_dir = _dir
     if data == "aptos":
-        df = pd.read_csv(base_dir+"train.csv", sep=',')
+        df = pd.read_csv(base_dir+"Aptos/train.csv", sep=',')
     else:
         all_files = glob.glob(os.path.join(base_dir, 'train_resized', '*.jpeg'))
         df = pd.read_csv(base_dir+"trainLabels.csv", sep=',') # replace trainLabels.csv with argparse saved csv file
