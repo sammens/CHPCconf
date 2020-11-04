@@ -1,15 +1,42 @@
+import sys
 from keras import layers
 from keras.models import Model
 from keras.optimizers import Adam
 from losses import categorical_focal_loss
-from keras.applications import InceptionV3
 
-def build_model(act, weight, size, loss=None):
-    _model = InceptionV3(
-        weights=weight, # inception weights
-        include_top=False,
-        input_shape=(size, size, 3))
+def build_model(model_name, act, weight, size, loss=None):
+    if model_name == "inception":
+        from keras.applications import InceptionV3
+        _model = InceptionV3(
+            weights=weight, # inception weights
+            include_top=False,
+            input_shape=(size, size, 3))
+        
+    elif model_name == "resnet":
+        from keras.applications import ResNet50
+        _model = ResNet50(
+            weights=weight, # resnet weights
+            include_top=False,
+            input_shape=(size, size, 3))
     
+    elif model_name == "VGG":
+        from keras.applications import VGG16
+        _model = VGG16(
+            weights=weight, # VGG weights
+            include_top=False,
+            input_shape=(size, size, 3))
+    
+    elif model_name == "inceptionresnet":
+        from keras.applications import InceptionResNetV2
+        _model = InceptionResNetV2(
+            weights=weight, # VGG weights
+            include_top=False,
+            input_shape=(size, size, 3))
+        
+    else:
+        print("This model is not available.")
+        sys.exit()
+        
     GAP_layer = layers.GlobalAveragePooling2D()
     drop_layer = layers.Dropout(0.5)
     dense_layer = layers.Dense(5, activation=act, name='final_output') #args.act = sigmoid

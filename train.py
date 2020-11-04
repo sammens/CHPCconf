@@ -35,7 +35,7 @@ if __name__ == '__main__':
     
     data_generator = create_datagen().flow(x_train, y_train, batch_size=args.batch_size, seed=2019)
     
-    model = build_model(args.acts, args.weight, args.size)
+    model = build_model(args.model, args.acts, args.weight, args.size)
     
     kappa_metrics = Metrics()
     

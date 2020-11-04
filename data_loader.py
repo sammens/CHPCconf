@@ -6,7 +6,7 @@ from utils import preprocess_image
 from sklearn.utils import resample
 from keras.preprocessing.image import ImageDataGenerator
 
-def load_data(labels, img_path, size=229, data=None, oversample=True, multi_label=True):
+def load_data(labels, img_path, size=299, data=None, oversample=True, multi_label=True):
         
     if oversample:
         new_df = pd.DataFrame()
