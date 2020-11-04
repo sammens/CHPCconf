@@ -14,7 +14,7 @@ from keras.backend.tensorflow_backend import set_session
 conf = tf.ConfigProto()
 conf.gpu_options.allow_growth = True 
 conf.gpu_options.per_process_gpu_memory_fraction = 0.9
-sess = tf.Session(config = conf)
+sess = tf.Session(config=conf)
 set_session(sess)
 
 np.random.seed(2019)
@@ -22,20 +22,32 @@ tf.set_random_seed(2019)
 
 if __name__ == '__main__':
     args = get_args()
-    train_df = path(args.path, formats=args.format, data=args.data)
+    train_df = path(args.path, 
+                    formats=args.format, 
+                    data=args.data)
     count_levels = np.bincount(train_df.iloc[:,1].values)
     class_weights = dict(enumerate(np.sum(count_levels)/(count_levels * count_levels.size)))
-    x_train, y_train = load_data(train_df, args.path, data=args.data, multi_label=args.multi_label)
+    x_train, y_train = load_data(train_df, 
+                                 args.path, 
+                                 data=args.data, 
+                                 multi_label=args.multi_label,
+                                 oversample=args.oversample)
     
-    x_train, x_val, y_train, y_val = train_test_split(
-        x_train, y_train, 
-        test_size=args.test_size, 
-        random_state=2019)
+    x_train, x_val, y_train, y_val = train_test_split(x_train,
+                                                      y_train, 
+                                                      test_size=args.test_size, 
+                                                      random_state=2019)
     
     
-    data_generator = create_datagen().flow(x_train, y_train, batch_size=args.batch_size, seed=2019)
+    data_generator = create_datagen().flow(x_train, 
+                                           y_train, 
+                                           batch_size=args.batch_size, 
+                                           seed=2019)
     
-    model = build_model(args.model, args.acts, args.weight, args.size)
+    model = build_model(args.model, 
+                        args.acts, 
+                        args.weight, 
+                        args.size)
     
     kappa_metrics = Metrics()
     

@@ -6,7 +6,12 @@ from utils import preprocess_image
 from sklearn.utils import resample
 from keras.preprocessing.image import ImageDataGenerator
 
-def load_data(labels, img_path, size=299, data=None, oversample=True, multi_label=True):
+def load_data(labels, 
+              img_path, 
+              size=299, 
+              data=None, 
+              oversample=False, 
+              multi_label=True):
         
     if oversample:
         new_df = pd.DataFrame()
@@ -15,10 +20,14 @@ def load_data(labels, img_path, size=299, data=None, oversample=True, multi_labe
         for i in minors:
             minor = labels[labels.iloc[:,1] == i]
             n = len(major) - len(minor)
-            minor_df = resample(minor, replace=True, n_samples=n+len(minor), random_state=42)
+            minor_df = resample(minor, 
+                                replace=True, 
+                                n_samples=n+len(minor), 
+                                random_state=42)
             new_df = new_df.append(minor_df)
         new_df = new_df.reset_index(drop=True)
-        labels = pd.concat([major, new_df], ignore_index=True)
+        labels = pd.concat([major, new_df], 
+                           ignore_index=True)
         labels = labels.reset_index(drop=True)
     else:
         pass
@@ -33,16 +42,21 @@ def load_data(labels, img_path, size=299, data=None, oversample=True, multi_labe
         y_train_multi[:, 4] = y_train[:, 4]
         
         for i in range(3, -1, -1):
-            y_train_multi[:, i] = np.logical_or(y_train[:, i], y_train_multi[:, i+1])
+            y_train_multi[:, i] = np.logical_or(y_train[:, i], 
+                                                y_train_multi[:, i+1])
         
         y_train = y_train_multi
     
     for i, image_id in enumerate(tqdm(labels.iloc[:,0])):
         if data == 'aptos':
-            x_train[i, :, :, :] = preprocess_image(img_path+'Aptos/train_images/{}.png'.format(image_id), size) 
+            x_train[i, :, :, :] = preprocess_image(
+                img_path+'Aptos/train_images/{}.png'.format(image_id), 
+                size) 
         else:
             try:
-                x_train[i, :, :, :] = preprocess_image(img_path+'train_resized/{}.jpeg'.format(image_id), size)
+                x_train[i, :, :, :] = preprocess_image(
+                    img_path+'train_resized/{}.jpeg'.format(image_id), 
+                    size)
             except FileNotFoundError:
                 continue
                 

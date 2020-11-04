@@ -19,8 +19,10 @@ def path(_dir, formats, data=None):
     if data == "aptos":
         df = pd.read_csv(base_dir+"Aptos/train.csv", sep=',')
     else:
-        all_files = glob.glob(os.path.join(base_dir, 'train_resized', '*.jpeg'))
-        df = pd.read_csv(base_dir+"trainLabels.csv", sep=',') # replace trainLabels.csv with argparse saved csv file
+        all_files = glob.glob(os.path.join(base_dir, 
+                                           'train_resized', 
+                                           '*.jpeg'))
+        df = pd.read_csv(base_dir+"trainLabels.csv", sep=',') 
         all_files_name = [re.split(r'\/', all_files[i])[-1] for i, file in enumerate(all_files)]
         all_files_dict = {"image": all_files_name}
         pd_files = pd.DataFrame.from_dict(all_files_dict)

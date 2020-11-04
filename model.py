@@ -4,7 +4,11 @@ from keras.models import Model
 from keras.optimizers import Adam
 from losses import categorical_focal_loss
 
-def build_model(model_name, act, weight, size, loss=None):
+def build_model(model_name, 
+                act, 
+                weight, 
+                size, 
+                loss=None):
     if model_name == "inception":
         from keras.applications import InceptionV3
         _model = InceptionV3(
@@ -39,7 +43,9 @@ def build_model(model_name, act, weight, size, loss=None):
         
     GAP_layer = layers.GlobalAveragePooling2D()
     drop_layer = layers.Dropout(0.5)
-    dense_layer = layers.Dense(5, activation=act, name='final_output') #args.act = sigmoid
+    dense_layer = layers.Dense(5, 
+                               activation=act, 
+                               name='final_output') #args.act = sigmoid
     
     x = GAP_layer(_model.layers[-1].output)
     x = drop_layer(x)
