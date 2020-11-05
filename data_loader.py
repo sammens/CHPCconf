@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov 02 08:52:04 2020
+
+@author: samuel
+"""
+
 import numpy as np
 import pandas as pd
 

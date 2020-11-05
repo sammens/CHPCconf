@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov 02 08:52:04 2020
+
+@author: samuel
+"""
+
 import sys
 from keras import layers
 from keras.models import Model
@@ -59,7 +67,7 @@ def build_model(model_name,
     else:
         model.compile(
             loss='binary_crossentropy',
-            optimizer=Adam(lr=0.00005),
+            optimizer=Adam(lr=0.01),
             metrics=['accuracy']
         )
     

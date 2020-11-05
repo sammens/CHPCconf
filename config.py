@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov 02 08:52:04 2020
+
+@author: samuel
+"""
+
 import argparse
 
 def get_args():
@@ -25,6 +33,10 @@ def get_args():
                         help='which model to use')
     parser.add_argument('--oversample', type=bool, default=False,
                         help='oversampling')
+    parser.add_argument('--lr', type=float, default=0.01,
+                        help='learning rate for the model')
+    parser.add_argument('--epochs', type=int, default=15, 
+                        help='Number of epochs for training the model')
     
     args = parser.parse_args()
     

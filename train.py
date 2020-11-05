@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov 02 08:52:04 2020
+
+@author: samuel
+"""
+
 import numpy as np
 import tensorflow as tf
 
@@ -54,7 +62,7 @@ if __name__ == '__main__':
     history = model.fit_generator(
         data_generator,
         steps_per_epoch=x_train.shape[0]/args.batch_size,
-        epochs=15,
+        epochs=args.epochs,
         validation_data=(x_val, y_val),
         class_weight=class_weights,
         max_queue_size=10, 
