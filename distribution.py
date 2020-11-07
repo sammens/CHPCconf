@@ -6,6 +6,7 @@ Created on Fri Nov  6 10:26:09 2020
 @author: samuel
 """
 
+import argparse
 import pandas as pd
 import seaborn as sns
 
@@ -29,6 +30,10 @@ def format_data(path, data=None):
     df.loc[df['level'] == 4, 'Level_Name'] = 'Proliferative'
     
     return df
+
+parser = argparse.ArgumentParser('parameters')
+
+parser.add_argument("--")
 
 if __name__ == '__main__':
     
