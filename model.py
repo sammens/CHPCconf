@@ -53,7 +53,7 @@ def build_model(model_name,
     drop_layer = layers.Dropout(0.5)
     dense_layer = layers.Dense(5, 
                                activation=act, 
-                               name='final_output') #args.act = sigmoid
+                               name='final_output') 
     
     x = GAP_layer(_model.layers[-1].output)
     x = drop_layer(x)

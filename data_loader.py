@@ -23,8 +23,11 @@ def load_data(labels,
         
     if oversample:
         new_df = pd.DataFrame()
-        major = labels[labels.iloc[:,1] == np.argmax(np.bincount(labels.iloc[:,1]))]
-        minors = np.unique(labels.iloc[:,1])[np.unique(labels.iloc[:,1]) != np.argmax(np.bincount(labels.iloc[:,1]))]
+        major = labels[labels.iloc[:,1] == np.argmax(
+            np.bincount(labels.iloc[:,1]))]
+        minors = np.unique(
+            labels.iloc[:,1])[np.unique(labels.iloc[:,1]) != np.argmax(
+                np.bincount(labels.iloc[:,1]))]
         for i in minors:
             minor = labels[labels.iloc[:,1] == i]
             n = len(major) - len(minor)

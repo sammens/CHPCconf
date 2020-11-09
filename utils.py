@@ -34,7 +34,7 @@ def path(_dir, formats, data=None):
         all_files_name = [re.split(r'\/', all_files[i])[-1] for i, file in enumerate(all_files)]
         all_files_dict = {"image": all_files_name}
         pd_files = pd.DataFrame.from_dict(all_files_dict)
-        pd_files['image'] = pd_files['image'].str.replace(formats, '') # replace with jpeg format argparse
+        pd_files['image'] = pd_files['image'].str.replace(formats, '') 
         keepImages = list(pd_files['image'])
         df = df[df['image'].isin(keepImages)]
     

@@ -39,6 +39,8 @@ parser.add_argument("--data", "-d", type=str, default='combined',
                     help="the data distribution to plot")
 parser.add_argument('--title', '-t', type=str,
                     help='title of the plot')
+parser.add_argument('--show', '-s', type=bool, default=False,
+                    help='show title or not')
 args = parser.parse_args()
 
 if __name__ == '__main__':
@@ -63,7 +65,14 @@ if __name__ == '__main__':
         print('This data is not available')
         sys.exit()
     
-    ax = sns.countplot(x='Level_Name', data=data, order=['Normal', 'Mild', 'Moderate', 'Severe', 'Proliferative'])
+    ax = sns.countplot(
+        x='Level_Name',
+        data=data, order=['Normal', 
+                          'Mild', 
+                          'Moderate', 
+                          'Severe', 
+                          'Proliferative'])
     ax.set(xlabel="Disease Level")
-    ax.set_title(title)
+    if args.show == True:
+        ax.set_title(title) 
     plt.show()

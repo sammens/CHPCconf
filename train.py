@@ -34,7 +34,8 @@ if __name__ == '__main__':
                     formats=args.format, 
                     data=args.data)
     count_levels = np.bincount(train_df.iloc[:,1].values)
-    class_weights = dict(enumerate(np.sum(count_levels)/(count_levels * count_levels.size)))
+    class_weights = dict(
+        enumerate(np.sum(count_levels)/(count_levels * count_levels.size)))
     x_train, y_train = load_data(train_df, 
                                  args.path, 
                                  data=args.data, 
