@@ -6,9 +6,11 @@ Created on Fri Nov  6 10:26:09 2020
 @author: samuel
 """
 
+import sys
 import argparse
 import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 def format_data(path, data=None):
     df = pd.read_csv(path)
@@ -33,7 +35,11 @@ def format_data(path, data=None):
 
 parser = argparse.ArgumentParser('parameters')
 
-parser.add_argument("--")
+parser.add_argument("--data", "-d", type=str, default='combined',
+                    help="the data distribution to plot")
+parser.add_argument('--title', '-t', type=str,
+                    help='title of the plot')
+args = parser.parse_args()
 
 if __name__ == '__main__':
     
@@ -41,11 +47,23 @@ if __name__ == '__main__':
     data_2 = format_data('data/trainLabels.csv')
     data_3 = format_data('data/retinopathy_solution.csv', data='eye_test')
     
-    merge_all = pd.concat([data_1, data_2, data_3])
+    if args.data == 'combined':    
+        data = pd.concat([data_1, data_2, data_3])
+        title = args.title
+        
+    elif args.data == 'aptos':
+        data = data_1
+        title = args.title
     
-    ax = sns.countplot(x='Level_Name', data=merge_all, order=['Normal', 'Mild', 'Moderate', 'Severe', 'Proliferative'])
+    elif args.data == 'eyepacs':
+        data = pd.concat([data_2, data_3])
+        title = args.title
+    
+    else:
+        print('This data is not available')
+        sys.exit()
+    
+    ax = sns.countplot(x='Level_Name', data=data, order=['Normal', 'Mild', 'Moderate', 'Severe', 'Proliferative'])
     ax.set(xlabel="Disease Level")
-    
-    merge_eye = pd.concat([data_2, data_3])
-    ax1 = sns.countplot(x='Level_Name', data=merge_eye, order=['Normal', 'Mild', 'Moderate', 'Severe', 'Proliferative'])
-    ax1.set(xlabel="Disease Level")
+    ax.set_title(title)
+    plt.show()
