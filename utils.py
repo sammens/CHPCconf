@@ -17,10 +17,12 @@ import matplotlib.pyplot as plt
 
 from PIL import Image
 from keras import backend as K
+from preprocessing import crop_clahe
  
-def preprocess_image(image_path, size=299):
+def preprocess_image(image_path, crop, desired_size=299):
     im = Image.open(image_path)
-    im = im.resize((size, )*2, resample=Image.LANCZOS)
+    im = crop_clahe(im, crop)
+    im = im.resize((desired_size, )*2, resample=Image.LANCZOS)
     return im
 
 def path(_dir, formats, data=None):
