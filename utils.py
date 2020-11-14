@@ -21,7 +21,9 @@ from preprocessing import crop_clahe
  
 def preprocess_image(image_path, crop, desired_size=299):
     im = Image.open(image_path)
+    im = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2BGR)
     im = crop_clahe(im, crop)
+    im = Image.fromarray(im)
     im = im.resize((desired_size, )*2, resample=Image.LANCZOS)
     return im
 

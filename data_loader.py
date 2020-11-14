@@ -57,7 +57,7 @@ def load_data(labels,
                                                 y_train_multi[:, i+1])
         
         y_train = y_train_multi
-    
+
     for i, image_id in enumerate(tqdm(labels.iloc[:,0])):
         if data == 'aptos':
             x_train[i, :, :, :] = preprocess_image(

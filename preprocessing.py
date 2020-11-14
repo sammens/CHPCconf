@@ -11,14 +11,14 @@ import imutils
 
 import numpy as np
 
-from PIL import Image  
+# from PIL import Image  
     
 def crop_image_from_gray(img, tol=7, **kwargs):
     """
     Crop out black borders
     https://www.kaggle.com/ratthachat/aptos-updated-preprocessing-ben-s-cropping
     """  
-    img = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
+    # img = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
     if img.ndim == 2:
         mask = img > tol
         return img[np.ix_(mask.any(1), mask.any(0))]
@@ -75,7 +75,6 @@ def ben_preprocessing(img):
     return img
 
 def crop_image(image):
-    image = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray, (5, 5), 0)
     thresh = cv2.threshold(gray, 45, 255, cv2.THRESH_BINARY)[1]
@@ -86,9 +85,7 @@ def crop_image(image):
     c = max(cnts, key=cv2.contourArea)
     x, y, w, h = cv2.boundingRect(c)
     
-    crop = image[y:y + h, x:x + w]
-    
-    img  = cv2.cvtColor(crop, cv2.COLOR_RGB2BGR)
+    img = image[y:y + h, x:x + w]
     
     return img
 
@@ -142,5 +139,4 @@ def crop_clahe(image, crop):
     b_adapteq = clahe.apply(brightness)    
     img_hsv[:,:,2] = b_adapteq
     img = cv2.cvtColor(img_hsv, cv2.COLOR_HSV2RGB)
-    img = Image.fromarray(img)
     return img

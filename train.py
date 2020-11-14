@@ -10,7 +10,7 @@ import numpy as np
 import tensorflow as tf
 
 from utils import path
-from utils import Metrics
+from metrics import Metrics
 from config import get_args
 from model import build_model
 from data_loader import load_data
@@ -36,6 +36,7 @@ if __name__ == '__main__':
     count_levels = np.bincount(train_df.iloc[:,1].values)
     class_weights = dict(
         enumerate(np.sum(count_levels)/(count_levels * count_levels.size)))
+
     x_train, y_train = load_data(train_df, 
                                  args.path, 
                                  data=args.data, 
