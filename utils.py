@@ -123,4 +123,28 @@ def gen_heatmap_img(img, model0, layer_name='last_conv_layer',viz_img=None,orig_
     plt.show()
     return heated_img
 
-
+def plot_cm(labels, predictions, p=0.5):
+    '''
+    A function to plot confusion matrix
+    '''
+    cm = confusion_matrix(labels, predictions > p)
+    plt.figure(figsize=(5,5))
+    sns.heatmap(cm, annot=True, fmt="d")
+    plt.title('Confusion matrix @{:.2f}'.format(p))
+    plt.ylabel('Actual label')
+    plt.xlabel('Predicted label')
+    
+def plot_roc(name, labels, predictions, **kwargs):
+    '''
+    A function to plot ROC curve
+    '''
+    fp, tp, _ = sklearn.metrics.roc_curve(labels, predictions)
+    
+    plt.plot(100*fp, 100*tp, label=name, linewidth=2, **kwargs)
+    plt.xlabel('False positives [%]')
+    plt.ylabel('True positives [%]')
+    plt.xlim([-0.5,20])
+    plt.ylim([80,100.5])
+    plt.grid(True)
+    ax = plt.gca()
+    ax.set_aspect('equal')
